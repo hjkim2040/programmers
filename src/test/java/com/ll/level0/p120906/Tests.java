@@ -9,13 +9,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Tests {
 
     @Test
-    @DisplayName("2, 3 => -1")
+    @DisplayName("1234 => 10")
     void t1() {
         assertThat(new Solution().solution(1234)).isEqualTo(10);
     }
 
     @Test
-    @DisplayName("11, 11 => 1")
+    @DisplayName("930211 => 16")
     void t2() {
         assertThat(new Solution().solution(930211)).isEqualTo(16);
     }
