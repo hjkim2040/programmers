@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(new Solution().intersection(new int[]{1, -1, 0}, new int []{2, -1 ,0}));
 
     }
 }
@@ -59,4 +58,11 @@ class Point{
         return x == point.x && y == point.y;
     }
 
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
