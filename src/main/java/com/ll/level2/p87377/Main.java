@@ -2,6 +2,7 @@ package com.ll.level2.p87377;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
@@ -98,6 +99,13 @@ class Solution {
         points.forEach(p -> matrix[(int) p.y][(int) p.x] = '*');
         return matrix;
     }
+    public String[] drawOnCoordinate(char[][]matrix){
+        return Point.Ut.revRange(0, matrix.length)
+                .boxed()
+                .map(i -> matrix[i])
+                .map(row -> new String(row))
+                .toArray(String[]::new);
+    }
 }
 class Point{
     public final long x;
@@ -112,6 +120,11 @@ class Point{
     }
     public static Point of(double x, double y){
         return of((long) x, (long) y);
+    }
+    class Ut {
+        static IntStream revRange(int from, int to){
+            return IntStream.range(from, to).map(i -> to - i + from - 1);
+        }
     }
 
     @Override
