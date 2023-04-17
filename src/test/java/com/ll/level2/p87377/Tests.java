@@ -54,4 +54,98 @@ public class Tests {
     void t3_4(){assertThat(new Solution()
             .intersections(new int[][]{{2, -1, 4},{-2, -1, 4},{0, -1, 1},{5, -8, -12},{5, 8, 12}}))
             .isEqualTo(Set.of(Point.of(4, 1), Point.of(4, -4), Point.of(-4, -4), Point.of(-4, 1), Point.of(0, 4)));}
+    @Test
+    @DisplayName("minPoint, [Point.of(1, 1), Point.of(-1, 1)]")
+    void t4() {
+        assertThat(
+                new Solution().getMinPoint(Set.of(Point.of(1, 1), Point.of(-1, 1)))
+        ).isEqualTo(
+                Point.of(-1, 1)
+        );
+    }
+
+    @Test
+    @DisplayName("minPoint, [Point.of(-5, 1), Point.of(-1, -7)]")
+    void t4_2() {
+        assertThat(
+                new Solution().getMinPoint(Set.of(Point.of(-5, 1), Point.of(-1, -7)))
+        ).isEqualTo(
+                Point.of(-5, -7)
+        );
+    }
+
+    @Test
+    @DisplayName("maxPoint, [Point.of(1, 1), Point.of(-1, 1)]")
+    void t4_3() {
+        assertThat(
+                new Solution().getMaxPoint(Set.of(Point.of(1, 1), Point.of(-1, 1)))
+        ).isEqualTo(
+                Point.of(1, 1)
+        );
+    }
+
+    @Test
+    @DisplayName("maxPoint, [Point.of(4, 1), Point.of(-1, 6)]")
+    void t4_4() {
+        assertThat(
+                new Solution().getMaxPoint(Set.of(Point.of(4, 1), Point.of(-1, 6)))
+        ).isEqualTo(
+                Point.of(4, 6)
+        );
+    }
+    @Test
+    @DisplayName("emptyMatrix, [Point.of(1, 1), Point.of(-1, 1)]")
+    void t5() {
+        assertThat(
+                new Solution().emptyMatrix(Set.of(Point.of(1, 1), Point.of(-1, 1)))
+        ).isEqualTo(
+                new char[][]{
+                        {'.', '.', '.'}
+                }
+        );
+    }
+
+    @Test
+    @DisplayName("emptyMatrix, [Point.of(4, -7), Point.of(-1, 6)]")
+    void t5_2() {
+        assertThat(
+                new Solution().emptyMatrix(Set.of(Point.of(4, -7), Point.of(-1, 6)))
+        ).isEqualTo(
+                new char[][]{
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'},
+                        {'.', '.', '.', '.', '.', '.'}
+                }
+        );
+    }
+    @Test
+    @DisplayName("positivePoints, [Point.of(1, 1), Point.of(-1, 1)]")
+    void t6() {
+        assertThat(
+                new Solution().positivePoints(Set.of(Point.of(1, 1), Point.of(-1, 1)))
+        ).isEqualTo(
+                Set.of(Point.of(2, 0), Point.of(0, 0))
+        );
+    }
+
+    @Test
+    @DisplayName("positivePoints, [Point.of(4, -7), Point.of(-1, 6)]")
+    void t6_2() {
+        assertThat(
+                new Solution().positivePoints(Set.of(Point.of(4, -7), Point.of(-1, 6)))
+        ).isEqualTo(
+                Set.of(Point.of(5, 0), Point.of(0, 13))
+        );
+    }
 }
