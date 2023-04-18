@@ -3,6 +3,7 @@ package com.ll.level2.p87377;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class Main {
 class Solution {
     public String[] solution(int[][] line) {
         // 교점들 구하고
-        Set<Point> points = intersections(line).toSet();
+        Points points = intersections(line);
         // 매트릭스로 옮긴다.
         char[][] matrix = transformToMatrix(points);
         return drawOnCoordinate(matrix);
@@ -65,7 +66,7 @@ class Solution {
         return points;
     }
 
-    public Point getMinPoint(Set<Point> points) {
+    public Point getMinPoint(Points points) {
         long x = Long.MAX_VALUE;
         long y = Long.MAX_VALUE;
 
@@ -77,7 +78,7 @@ class Solution {
         return Point.of(x, y);
     }
 
-    public Point getMaxPoint(Set<Point> points) {
+    public Point getMaxPoint(Points points) {
         long x = Long.MIN_VALUE;
         long y = Long.MIN_VALUE;
 
@@ -89,7 +90,7 @@ class Solution {
         return Point.of(x, y);
     }
 
-    public char[][] emptyMatrix(Set<Point> points) {
+    public char[][] emptyMatrix(Points points) {
         Point minPoint = getMinPoint(points);
         Point maxPoint = getMaxPoint(points);
 
@@ -102,12 +103,16 @@ class Solution {
         return matrix;
     }
 
-    public Set<Point> positivePoints(Set<Point> points) {
+    public Points positivePoints(Points points) {
         Point minPoint = getMinPoint(points);
-        return points.stream().map(p -> Point.of(p.x - minPoint.x, p.y - minPoint.y)).collect(Collectors.toSet());
+        return Points.of(
+                points.stream()
+                        .map(p -> Point.of(p.x - minPoint.x, p.y - minPoint.y))
+                        .toArray(Point[]::new)
+        );
     }
 
-    public char[][] transformToMatrix(Set<Point> points) {
+    public char[][] transformToMatrix(Points points) {
         char[][] matrix = emptyMatrix(points);
         points = positivePoints(points);
 
@@ -163,7 +168,7 @@ class Point {
                 '}';
     }
 }
-class Points {
+class Points implements Iterable<Point>{
     private final Set<Point> data;
 
     private Points(Set<Point> data) {
@@ -204,6 +209,14 @@ class Points {
     @Override
     public int hashCode() {
         return Objects.hash(data);
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return data.iterator();
+    }
+    public Stream<Point> stream(){
+        return data.stream();
     }
 }
 class Ut {
