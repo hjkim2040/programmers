@@ -13,7 +13,7 @@ public class Main {
 class Solution {
     public String[] solution(int[][] line) {
         // 교점들 구하고
-        Set<Point> points = intersections(line);
+        Set<Point> points = intersections(line).toSet();
         // 매트릭스로 옮긴다.
         char[][] matrix = transformToMatrix(points);
         return drawOnCoordinate(matrix);
@@ -47,8 +47,8 @@ class Solution {
         return Point.of(x, y);
     }
 
-    public Set<Point> intersections(int[][] line) {
-        Set<Point> points = new HashSet<>();
+    public Points intersections(int[][] line) {
+        Points points = Points.of();
 
         for (int i = 0; i < line.length; i++) {
             for (int j = i + 1; j < line.length; j++) {
@@ -161,6 +161,49 @@ class Point {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+}
+class Points {
+    private final Set<Point> data;
+
+    private Points(Set<Point> data) {
+        this.data = data;
+    }
+
+    // Point... 는 Point[] 와 같은 뜻
+    // Point... 의 특수기능 : 가변인자
+    // Points.of(arg1);
+    // Points.of(arg1, arg2);
+    // Points.of(arg1, arg2, agr3);
+    public static Points of(Point... pointArray) {
+        // 입력받은 배열을 HashSet 형태로 하다.
+        // Collectors.toSet() 를 사용하지 않는 이유 : 우리는 mutable 한것을 원한다.
+        // mutable : 수정가능
+        // immutable : 수정불가능(add, remove 등이 안됨)
+        return new Points(
+                Arrays.stream(pointArray)
+                        .collect(Collectors.toCollection(HashSet::new))
+        );
+    }
+    public boolean add(Point point) {
+        return data.add(point);
+    }
+
+    public Set<Point> toSet() {
+        return data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Points points = (Points) o;
+        return Objects.equals(data, points.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(data);
     }
 }
 class Ut {
