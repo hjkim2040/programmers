@@ -1,4 +1,4 @@
-package com.ll.level2.p87377;
+package com.ll;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

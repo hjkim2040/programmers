@@ -1,4 +1,4 @@
-package com.ll.level2.p87377;
+package com.ll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
