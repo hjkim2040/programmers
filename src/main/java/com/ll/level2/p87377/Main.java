@@ -50,7 +50,7 @@ class Solution {
         return Point.of(x, y);
     }
 
-     Points intersections(int[][] line) {
+    private Points intersections(int[][] line) {
         Points points = Points.of();
 
         for (int i = 0; i < line.length; i++) {
@@ -72,7 +72,7 @@ class Solution {
 
 
 
-     String[] drawOnCoordinate(char[][] matrix) {
+    private String[] drawOnCoordinate(char[][] matrix) {
         return Ut.revRange(0, matrix.length)
                 .boxed()
                 .map(i -> matrix[i])
