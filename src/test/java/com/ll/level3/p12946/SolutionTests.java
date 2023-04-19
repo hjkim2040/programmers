@@ -1,15 +1,17 @@
 package com.ll.level3.p12946;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SolutionTests {
+    @BeforeAll
+    void beforeAll() {
+        Solution.isDebug = true;
+    }
     @Test
     @DisplayName("n=1 => [[1,3]]")
     void t01() {
