@@ -7,15 +7,22 @@ class Solution{
     public static boolean isDebug = false;
 
     public int solution(String name) {
-        int move = 1;
+        int moveCost = 0; // 위치 바꾸는데 드는 비용, 즉 좌/우
+        int nameCost = 0; // 문자 바꾸는데 드는 비용, 즉 위/아래
 
-        char c0 = name.charAt(0);
-        char c1 = name.charAt(1);
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
 
-        int diff0 = c0 - 'A';
-        int diff1 = c0 - 'A';
+            int diff = c - 'A';
 
-        return diff0 + diff1 + move;
+            nameCost += diff;
+
+            if (diff > 0) {
+                moveCost = i;
+            }
+        }
+
+        return nameCost + moveCost;
     }
 
 }
