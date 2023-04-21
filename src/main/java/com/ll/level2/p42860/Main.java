@@ -7,7 +7,9 @@ class Solution{
     public static boolean isDebug = false;
 
     public int solution(String name) {
-        return 1;
+        char c = name.charAt(0);
+
+        return c - 'A';
     }
 
 }

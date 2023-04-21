@@ -13,12 +13,21 @@ public class SolutionTests {
     }
 
     @Test
-    @DisplayName("BAA => 1")
+    @DisplayName("BAA → 1")
     void t01() {
         assertThat(
                 new Solution().solution("BAA")
         ).isEqualTo(
                 1
+        );
+    }
+    @Test
+    @DisplayName("CAA → 2")
+    void t02() {
+        assertThat(
+                new Solution().solution("CAA")
+        ).isEqualTo(
+                2
         );
     }
 }
