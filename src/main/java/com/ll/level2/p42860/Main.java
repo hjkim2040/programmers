@@ -7,9 +7,15 @@ class Solution{
     public static boolean isDebug = false;
 
     public int solution(String name) {
-        char c = name.charAt(0);
+        int move = 1;
 
-        return c - 'A';
+        char c0 = name.charAt(0);
+        char c1 = name.charAt(1);
+
+        int diff0 = c0 - 'A';
+        int diff1 = c0 - 'A';
+
+        return diff0 + diff1 + move;
     }
 
 }
