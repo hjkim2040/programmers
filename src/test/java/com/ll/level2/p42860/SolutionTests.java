@@ -48,4 +48,43 @@ public class SolutionTests {
                 3
         );
     }
+    @Test
+    @DisplayName("O → 12")
+    void t05() {
+        assertThat(
+                new Solution().solution("O")
+        ).isEqualTo(
+                12
+        );
+    }
+
+    @Test
+    @DisplayName("N → 13")
+    void t06() {
+        assertThat(
+                new Solution().solution("N")
+        ).isEqualTo(
+                13
+        );
+    }
+
+    @Test
+    @DisplayName("KAABC, moveCostBy1 → 4")
+    void t07() {
+        assertThat(
+                new Solution().moveCostBy1("KAABC")
+        ).isEqualTo(
+                4
+        );
+    }
+
+    @Test
+    @DisplayName("KAABCAAA, moveCostBy1 → 4")
+    void t08() {
+        assertThat(
+                new Solution().moveCostBy1("KAABCAAA")
+        ).isEqualTo(
+                4
+        );
+    }
 }

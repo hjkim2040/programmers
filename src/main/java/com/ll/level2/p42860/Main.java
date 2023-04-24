@@ -16,7 +16,7 @@ class Solution{
         for (int i = 0; i < name.length(); i++) {
             char c = name.charAt(i);
 
-            int diff = c - 'A';
+            int diff = Math.min(c - 'A', 'Z' - c + 1);
 
             nameCost += diff;
         }
@@ -38,6 +38,17 @@ class Solution{
         }
 
         return moveCost;
+    }
+    public int moveCostBy1(String name) {
+        int move = 0;
+
+        for ( int i = 0; i < name.length(); i++ ) {
+            if ( name.charAt(i) != 'A' ) {
+                move = i;
+            }
+        }
+
+        return move;
     }
 
 }
