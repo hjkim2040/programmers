@@ -135,4 +135,23 @@ public class SolutionTests {
                 new Ut.LongestCharContinuumIndexAndLength(1, 4)
         );
     }
+    @Test
+    @DisplayName("ABCDAAAAKK, moveCostBy3 → 7")
+    void t14() {
+        assertThat(
+                new Solution().moveCostBy3("ABCDAAAAKK")
+        ).isEqualTo(
+                7
+        );
+    }
+
+    @Test
+    @DisplayName("ADAAAABCDKK, moveCostBy3 → 11")
+    void t15() {
+        assertThat(
+                new Solution().moveCostBy3("ADAAAABCDKK")
+        ).isEqualTo(
+                11
+        );
+    }
 }

@@ -64,6 +64,21 @@ class Solution{
 
         return move;
     }
+    public int moveCostBy3(String name) {
+        Ut.LongestCharContinuumIndexAndLength indexAndLength = Ut.getLongestCharContinuumIndexAndLength(name, 'A');
+
+        if (indexAndLength.index == -1) return moveCostBy1(name);
+
+        // 사막 뒤의 문자 개수
+        int backCharsCount = name.length() - (indexAndLength.index + indexAndLength.length);
+        int moveBack = backCharsCount * 2;
+
+        // 사막 앞의 문자 개수
+        int frontCharsCount = indexAndLength.index - 1;
+        int moveFront = frontCharsCount;
+
+        return moveBack + moveFront;
+    }
 }
 
 class Ut {
