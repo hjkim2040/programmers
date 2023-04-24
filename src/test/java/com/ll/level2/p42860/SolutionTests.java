@@ -39,4 +39,13 @@ public class SolutionTests {
                 3
         );
     }
+    @Test
+    @DisplayName("ZBA → 3") // 하, 우, 상
+    void t04() {
+        assertThat(
+                new Solution().solution("ZBA")
+        ).isEqualTo(
+                3
+        );
+    }
 }
