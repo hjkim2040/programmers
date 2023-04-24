@@ -154,4 +154,23 @@ public class SolutionTests {
                 11
         );
     }
+    @Test
+    @DisplayName("ADAAAABCDKK, moveCostBy4 → 7")
+    void t16() {
+        assertThat(
+                new Solution().moveCostBy4("ADAAAABCDKK")
+        ).isEqualTo(
+                7
+        );
+    }
+
+    @Test
+    @DisplayName("KKAAE, moveCostBy4 → 3")
+    void t17() {
+        assertThat(
+                new Solution().moveCostBy4("KKAAE")
+        ).isEqualTo(
+                3
+        );
+    }
 }
