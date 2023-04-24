@@ -1,5 +1,6 @@
 package com.ll.level2.p42860;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,20 +28,15 @@ class Solution{
         return nameCost;
     }
 
-    private int moveCost(String name) {
-        int moveCost = 0;
+    int moveCost(String name) {
+        if (name.length() == 1) return 0;
+        if (Ut.isAllOf(name.substring(1), 'A')) return 0;
 
-        for (int i = 0; i < name.length(); i++) {
-            char c = name.charAt(i);
-
-            int diff = c - 'A';
-
-            if (diff > 0) {
-                moveCost = i;
-            }
-        }
-
-        return moveCost;
+        return List.of(moveCostBy1(name), moveCostBy2(name), moveCostBy3(name), moveCostBy4(name))
+                .stream()
+                .sorted()
+                .findFirst()
+                .orElse(0);
     }
     public int moveCostBy1(String name) {
         int move = 0;
@@ -97,6 +93,11 @@ class Solution{
 }
 
 class Ut {
+    public static boolean isAllOf(String str, char c) {
+        return str
+                .chars()
+                .allMatch(e -> c == e);
+    }
 
     public static class LongestCharContinuumIndexAndLength {
         public int index;
@@ -110,7 +111,9 @@ class Ut {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof LongestCharContinuumIndexAndLength that)) return false;
+            if (!(o instanceof LongestCharContinuumIndexAndLength)) return false;
+
+            LongestCharContinuumIndexAndLength that = (LongestCharContinuumIndexAndLength) o;
 
             if (index != that.index) return false;
             return length == that.length;

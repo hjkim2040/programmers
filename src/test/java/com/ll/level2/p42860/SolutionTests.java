@@ -173,4 +173,33 @@ public class SolutionTests {
                 3
         );
     }
+    @Test
+    @DisplayName("ADAAAABCDKK, moveCost → 7")
+    void t18() {
+        assertThat(
+                new Solution().moveCost("ADAAAABCDKK")
+        ).isEqualTo(
+                7
+        );
+    }
+
+    @Test
+    @DisplayName("JEROEN, solution → 56")
+    void t19() {
+        assertThat(
+                new Solution().solution("JEROEN")
+        ).isEqualTo(
+                56
+        );
+    }
+
+    @Test
+    @DisplayName("JAN, solution → 23")
+    void t20() {
+        assertThat(
+                new Solution().solution("JAN")
+        ).isEqualTo(
+                23
+        );
+    }
 }
