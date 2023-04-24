@@ -87,4 +87,33 @@ public class SolutionTests {
                 4
         );
     }
+    @Test
+    @DisplayName("KAABC, moveCostBy2 → 2")
+    void t09() {
+        assertThat(
+                new Solution().moveCostBy2("KAABC")
+        ).isEqualTo(
+                2
+        );
+    }
+
+    @Test
+    @DisplayName("KZABC, moveCostBy2 → 4")
+    void t10() {
+        assertThat(
+                new Solution().moveCostBy2("KZABC")
+        ).isEqualTo(
+                4
+        );
+    }
+
+    @Test
+    @DisplayName("AAAAA, moveCostBy2 → 0")
+    void t11() {
+        assertThat(
+                new Solution().moveCostBy2("AAAAA")
+        ).isEqualTo(
+                0
+        );
+    }
 }

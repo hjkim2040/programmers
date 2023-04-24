@@ -50,5 +50,16 @@ class Solution{
 
         return move;
     }
+    public int moveCostBy2(String name) {
+        int move = 0;
+
+        for (int i = name.length() - 1; i >= 1; i--) {
+            if (name.charAt(i) != 'A') {
+                move = name.length() - i;
+            }
+        }
+
+        return move;
+    }
 
 }
