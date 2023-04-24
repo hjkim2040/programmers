@@ -116,4 +116,23 @@ public class SolutionTests {
                 0
         );
     }
+    @Test
+    @DisplayName("Ut.getLongestCharContinuumIndexAndLength(\"KBAAAATK\", 'A') → rs.index: 2, rs.length: 4")
+    void t12() {
+        assertThat(
+                Ut.getLongestCharContinuumIndexAndLength("KBAAAATK", 'A')
+        ).isEqualTo(
+                new Ut.LongestCharContinuumIndexAndLength(2, 4)
+        );
+    }
+
+    @Test
+    @DisplayName("Ut.getLongestCharContinuumIndexAndLength(\"KAAAABAAAATK\", 'A') → rs.index: 1, rs.length: 4")
+    void t13() {
+        assertThat(
+                Ut.getLongestCharContinuumIndexAndLength("KAAAABAAAATK", 'A')
+        ).isEqualTo(
+                new Ut.LongestCharContinuumIndexAndLength(1, 4)
+        );
+    }
 }
