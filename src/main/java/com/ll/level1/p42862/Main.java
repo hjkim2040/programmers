@@ -13,8 +13,10 @@ class Solution {
 
     public int solution(int n, int[] lostArr, int[] reserveArr) {
         // 리스트 화
-        List<Integer> lost = Arrays.stream(lostArr).boxed().toList(); // 불변 리스트
-        List<Integer> reserve = Arrays.stream(reserveArr).boxed().collect(Collectors.toCollection(ArrayList::new)); // 가변 리스트
+        List<Integer> lost = Arrays.stream(lostArr).boxed().sorted().collect(Collectors.toCollection(ArrayList::new)); // 가변 리스트
+        List<Integer> reserve = Arrays.stream(reserveArr).boxed().sorted().collect(Collectors.toCollection(ArrayList::new)); // 가변 리스트
+
+        borrowSelf(lost, reserve);
 
         // 참석하지 못하는 학생들의 수, 초기값을 지정
         int notAttendCount = lost.size();
@@ -24,6 +26,27 @@ class Solution {
         notAttendCount -= borrow(lost, reserve);
 
         return n - notAttendCount;
+    }
+    private void borrowSelf(List<Integer> lost, List<Integer> reserve) {
+        /* 절대 하면 안되는 코드 */
+        /*
+        for ( int n : lost ) {
+            if ( reserve.contains(n) ) {
+                lost.remove(Integer.valueOf(n));
+                reserve.remove(Integer.valueOf(n));
+            }
+        }
+        */
+
+        List<Integer> self = lost
+                .stream()
+                .filter(n -> reserve.contains(n))
+                .collect(Collectors.toList());
+
+        self.forEach(n -> {
+            lost.remove(Integer.valueOf(n));
+            reserve.remove(Integer.valueOf(n));
+        });
     }
 
     public int borrow(List<Integer> lost, List<Integer> reserve) {
