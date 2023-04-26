@@ -1,8 +1,8 @@
 package com.ll.level1.p42840;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -15,11 +15,11 @@ public class Main {
         );
         // [1]
 
-//        System.out.println(
-//                Arrays.toString(
-//                        new Solution().solution(new int[]{1, 3, 2, 4, 2})
-//                )
-//        );
+        System.out.println(
+                Arrays.toString(
+                        new Solution2().solution(new int[]{1, 3, 2, 4, 2})
+                )
+        );
         // [1, 2, 3]
     }
 }
@@ -82,4 +82,49 @@ class Solution {
 
         return score;
     }
+    class Solution2 {
+        public int[] solution(int[] answers) {
+            Map<Integer, Long> rightAnswerCountsByStyleNo =
+                    IntStream.range(0, answers.length)
+                            .mapToObj(i -> {
+                                List<Integer> l = new ArrayList<>();
+
+                                if (answers[i] == answerOfSt1(i)) l.add(1);
+                                if (answers[i] == answerOfSt2(i)) l.add(2);
+                                if (answers[i] == answerOfSt3(i)) l.add(3);
+
+                                return l;
+                            })
+                            .flatMap(List::stream)
+                            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+            long max = rightAnswerCountsByStyleNo
+                    .values()
+                    .stream()
+                    .max(Long::compareTo)
+                    .get();
+
+            return rightAnswerCountsByStyleNo
+                    .entrySet()
+                    .stream()
+                    .filter(e -> e.getValue() == max)
+                    .mapToInt(Map.Entry::getKey)
+                    .sorted()
+                    .toArray();
+        }
+
+        int answerOfSt1(int i) {
+            int[] answers = new int[]{1, 2, 3, 4, 5};
+            return answers[i % answers.length];
+        }
+
+        int answerOfSt2(int i) {
+            int[] answers = new int[]{2, 1, 2, 3, 2, 4, 2, 5};
+            return answers[i % answers.length];
+        }
+
+        int answerOfSt3(int i) {
+            int[] answers = new int[]{3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+            return answers[i % answers.length];
+        }
 }
