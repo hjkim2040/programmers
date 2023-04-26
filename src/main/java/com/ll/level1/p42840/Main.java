@@ -1,6 +1,8 @@
 package com.ll.level1.p42840;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -23,9 +25,10 @@ public class Main {
 }
 
 class Solution {
+    private Map<Integer, Integer> scores = new HashMap<>();
     public int[] solution(int[] answers) {
-        int maxPoint = Stream.of(scoreOf1(answers), scoreOf2(answers), scoreOf3(answers))
-                .mapToInt(Integer::intValue)
+        int maxPoint = IntStream.rangeClosed(1, 3)
+                .map(patterNo -> scoreOf(answers, patterNo))
                 .max()
                 .getAsInt();
 
@@ -47,13 +50,28 @@ class Solution {
         return scoreOf(answers, new int[]{3, 3, 1, 1, 2, 2, 4, 4, 5, 5});
     }
     private int scoreOf(int[] answers, int patternNo) {
+        System.out.println("scoreOf(캐시) 호출, 캐시 키 : patternNo = " + patternNo);
+        // 일단 바로 계산을 하기 전에 cache 뒤져본다.
+        if (scores.containsKey(patternNo)) return scores.get(patternNo);
+
+        int score = _scoreOf(answers, patternNo);
+
+        // 계산한 점수를 cache 에 저장한다.
+        scores.put(patternNo, score);
+
+        return score;
+    }
+
+    // 순수계산함수
+    private int _scoreOf(int[] answers, int patternNo) {
         if (patternNo == 1) return scoreOf1(answers);
-        if (patternNo == 2) return scoreOf2(answers);
+        else if (patternNo == 2) return scoreOf2(answers);
 
         return scoreOf3(answers);
     }
 
     private int scoreOf(int[] answers, int[] pattern) {
+        System.out.println("순수계산함수, 호출");
         int score = 0;
 
         for (int i = 0; i < answers.length; i++) {
