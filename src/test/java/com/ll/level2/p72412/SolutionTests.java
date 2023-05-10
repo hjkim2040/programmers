@@ -62,4 +62,11 @@ public class SolutionTests {
     void t5() {
         new Solution().getAllQueries().forEach(System.out::println);
     }
+    @Test
+    @DisplayName("[2, 4, 6, 8, 10, 12, 14], 8 → 4")
+    void t6() {
+        assertThat(
+                new Solution().countBiggerThan(List.of(2, 4, 6, 8, 10, 12, 14), 8)
+        ).isEqualTo(4);
+    }
 }

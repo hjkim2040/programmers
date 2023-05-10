@@ -67,5 +67,12 @@ class Solution {
 
         return all;
     }
+    public int countBiggerThan(List<Integer> scores, int score) {
+        for (int i = 0; i < scores.size(); i++) {
+            if (scores.get(i) >= score) return scores.size() - i;
+        }
+
+        return 0;
+    }
 }
 
