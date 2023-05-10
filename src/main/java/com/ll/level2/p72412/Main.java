@@ -1,5 +1,6 @@
 package com.ll.level2.p72412;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,26 @@ class Solution {
         scoresMap.put("- - senior -", List.of(50, 150, 210, 260));
 
         return scoresMap;
+    }
+    public List<String> getAllQueries() {
+        String[] languageTypeCodes = new String[]{"-", "cpp", "java", "python"};
+        String[] jobGroupTypeCodes = new String[]{"-", "backend", "frontend"};
+        String[] careerTypeCodes = new String[]{"-", "junior", "senior"};
+        String[] foodTypeCodes = new String[]{"-", "chicken", "pizza"};
+
+        List<String> all = new ArrayList<>();
+
+        for (String languageTypeCode : languageTypeCodes) {
+            for (String jobGroupTypeCode : jobGroupTypeCodes) {
+                for (String careerTypeCode : careerTypeCodes) {
+                    for (String foodTypeCode : foodTypeCodes) {
+                        all.add(languageTypeCode + " " + jobGroupTypeCode + " " + careerTypeCode + " " + foodTypeCode);
+                    }
+                }
+            }
+        }
+
+        return all;
     }
 }
 
