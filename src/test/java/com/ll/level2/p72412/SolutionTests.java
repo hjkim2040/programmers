@@ -28,4 +28,33 @@ public class SolutionTests {
 
         assertThat(scores).containsExactly(150, 210);
     }
+    @Test
+    @DisplayName("java - - - → 80, 150")
+    void t2() {
+        Map<String, List<Integer>> scoresMap = new Solution().buildScoresMap(info);
+
+        List<Integer> scores = scoresMap.get("java - - -");
+
+        assertThat(scores).containsExactly(80, 150);
+    }
+
+    @Test
+    @DisplayName("python - - - → 50, 150, 210")
+    void t3() {
+        Map<String, List<Integer>> scoresMap = new Solution().buildScoresMap(info);
+
+        List<Integer> scores = scoresMap.get("python - - -");
+
+        assertThat(scores).containsExactly(50, 150, 210);
+    }
+
+    @Test
+    @DisplayName("- - senior - → 50, 150, 210, 260")
+    void t4() {
+        Map<String, List<Integer>> scoresMap = new Solution().buildScoresMap(info);
+
+        List<Integer> scores = scoresMap.get("- - senior -");
+
+        assertThat(scores).containsExactly(50, 150, 210, 260);
+    }
 }
