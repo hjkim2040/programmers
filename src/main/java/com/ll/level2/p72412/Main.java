@@ -9,7 +9,19 @@ public class Main {
 }
 class Solution {
     public int[] solution(String[] info, String[] query) {
-        int[] answer = {};
+        Map<String, List<Integer>> scoresMap = buildScoresMap(info);
+
+        int[] answer = new int[query.length];
+
+        for (int i = 0; i < answer.length; i++) {
+
+            int lastSpaceIndex = query[i].lastIndexOf(" "); // 가장 마지막으로 등장하는 공백의 인덱스 찾기
+
+            String key = query[i].substring(0, lastSpaceIndex).replaceAll(" and ", " ");
+            int count = Integer.parseInt(query[i].substring(lastSpaceIndex + 1));
+
+            answer[i] = countBiggerThan(scoresMap.get(key), count);
+        }
         return answer;
     }
     Map<String, List<Integer>> buildScoresMap(String[] info) {
