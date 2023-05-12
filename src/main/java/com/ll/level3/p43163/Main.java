@@ -1,45 +1,46 @@
 package com.ll.level3.p43163;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 }
 class Solution {
     public int solution(String begin, String target, String[] words) {
-        boolean exists = Arrays.stream(words)
-                .filter(e -> e.equals(target))
-                .count() == 1L;
+        Queue<State> queue = new LinkedList<>();
 
-        if (!exists) return 0;
+        queue.add(new State(begin, 0));
 
-        boolean[] visited = new boolean[words.length];
+        while (!queue.isEmpty()) {
+            State state = queue.poll();
 
-        String current = begin;
+            // 오아시스인지 체크하고, 맞으면 바로 끝냄, 왜냐하면 나는 중심점으로 부터 찔끔찔끔 움직이고 있으니
+            // 발견되는 그 지점은 중심점에서 가장 가까운 지점이기 때문이다.
+            if (state.word.equals(target)) return state.depth;
 
-        int whileCount = 0;
-        int depth = 0;
-
-        while (true) {
-            whileCount++;
-
+            // 오아시스가 아닌 경우
             for (int i = 0; i < words.length; i++) {
-                if (visited[i]) continue;
-
-                if (isConvertible(current, words[i])) {
-                    visited[i] = true;
-
-                    if (words[i].equals(target)) return depth;
-
-                    current = words[i];
-                    System.out.println(current);
-                    depth++;
+                // 비록 오아시스는 아니지만
+                // 그 지점으로 부터 뻗어나갈 수 있는 경로가 있다면
+                if (isConvertible(state.word, words[i])) {
+                    // 추후 탐색지점으로 등록한다.
+                    queue.add(new State(words[i], state.depth + 1));
                 }
             }
-
-            if (whileCount > 1000) break;
         }
 
-        return depth;
+        return 0;
+    }
+
+    private static class State {
+        private String word;
+        private int depth;
+
+        public State(String word, int depth) {
+            this.word = word;
+            this.depth = depth;
+        }
     }
     public boolean isConvertible(String word1, String word2) {
         int diffCount = 0;
