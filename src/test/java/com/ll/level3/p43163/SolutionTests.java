@@ -25,4 +25,11 @@ public class SolutionTests {
                 new Solution().isConvertible("hit", "lot")
         ).isEqualTo(false);
     }
+    @Test
+    @DisplayName("hit, cog, {hot,dot,dog,lot,log} → 0")
+    void t3() {
+        assertThat(
+                new Solution().solution("hit", "cog", new String[]{"hot", "dot", "dog", "lot", "log"})
+        ).isEqualTo(0);
+    }
 }

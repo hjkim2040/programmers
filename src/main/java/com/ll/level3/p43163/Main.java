@@ -12,6 +12,8 @@ class Solution {
 
         queue.add(new State(begin, 0));
 
+        boolean[] visited = new boolean[words.length];
+
         while (!queue.isEmpty()) {
             State state = queue.poll();
 
@@ -21,10 +23,12 @@ class Solution {
 
             // 오아시스가 아닌 경우
             for (int i = 0; i < words.length; i++) {
+                if (visited[i]) continue; // 이미 탐색할곳으로 등록된 경우는 무시
                 // 비록 오아시스는 아니지만
                 // 그 지점으로 부터 뻗어나갈 수 있는 경로가 있다면
                 if (isConvertible(state.word, words[i])) {
                     // 추후 탐색지점으로 등록한다.
+                    visited[i] = true; // 해당 지점은 이미 탐색되었음을 알림
                     queue.add(new State(words[i], state.depth + 1));
                 }
             }
