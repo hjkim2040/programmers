@@ -4,6 +4,6 @@ public class Main {
 }
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        return 101;
+        return bridge_length + truck_weights.length;
     }
 }
