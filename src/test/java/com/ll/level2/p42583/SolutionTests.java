@@ -36,4 +36,13 @@ public class SolutionTests {
                 110
         );
     }
+    @Test
+    @DisplayName("2, 10, {7,4,5,6} → 8")
+    void t04() {
+        assertThat(
+                new Solution().solution(2, 10, new int[]{7, 4, 5, 6})
+        ).isEqualTo(
+                8
+        );
+    }
 }
