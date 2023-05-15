@@ -39,7 +39,7 @@ class TruckPass {
     public static int bridgeLength;
     // 다리가 버틸 수 있는 하중
     public static int bridgeAllowableWeight;
-    public static int bridgeWeight = 0;
+    public static int onBridgeWeight = 0;
     public static int seconds;
     // 이 트럭의 무게
     private final int weight;
@@ -57,44 +57,46 @@ class TruckPass {
 
     public boolean isPassed() {
         if (!started) return false;
-        return secondsAfterOnBridge == bridgeLength;
+        return secondsAfterOnBridge == bridgeLength + 1;
     }
 
     // 매 초마다 수행해야 하는 일을 처리
     public void tick() {
-        // 이제 막 빠지는 경우
-        if (started && secondsAfterOnBridge == bridgeLength) {
-            bridgeWeight -= weight;
-            return;
-        }
+
 
         if (isPassed()) return;
 
-        if (started) {
-            bridgeWeight += weight;
-            secondsAfterOnBridge++;
-            return;
-        }
+
 
         if (isTurnToStart()) {
             started = true;
+            onBridgeWeight += weight; // 내가 들어감으로써 다리 위에 있는 무게가 증가
+        }
+
+        // 다리 위에 있는 시간을 증가
+        if (started) {
             secondsAfterOnBridge++;
+            // 다리를 벗어났다면 무게를 감소, 즉 패스처리
+            if (secondsAfterOnBridge == bridgeLength + 1) {
+                onBridgeWeight -= weight;
+            }
         }
     }
 
     private boolean isTurnToStart() {
-        if (isWaitingNumberZero() && isBridgeAllowableWeight()) {
+        if (isWaitingNumberZero() && canIIn()) {
             return true;
         }
 
         return false;
     }
 
-    private boolean isBridgeAllowableWeight() {
-        return bridgeAllowableWeight >= bridgeWeight + weight;
+    private boolean canIIn() {
+        return bridgeAllowableWeight >= onBridgeWeight + weight;
     }
 
     private boolean isWaitingNumberZero() {
-        return prev == null || (prev.started && prev.secondsAfterOnBridge > 0);
+        if (started) return false;
+        return prev == null || (prev.started && prev.secondsAfterOnBridge > 1);
     }
 }
