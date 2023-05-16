@@ -269,9 +269,26 @@ class Solution2 {
 
         int seconds = 0;
 
-        boolean allPassed = false;
+        // 다리에 올려져 있는 무게
+        int onBridgeWeight = 0;
+        int truckIndex = 0;
 
-        while (true) {
+        // 트럭이 모두 다 진입할 때 까지 반복
+        while (truckIndex < truck_weights.length) {
+            onBridgeWeight -= bridge.poll(); // 다리 끝에 있는 녀석을 꺼낸다.
+
+            // 이번에 진입시켜야 하는 트럭의 무게
+            int truckWeight = truck_weights[truckIndex];
+
+            // 진입시킬 수 있는지 확인
+            if (onBridgeWeight + truckWeight <= weight) {
+                bridge.add(truckWeight);
+                onBridgeWeight += truckWeight;
+                truckIndex++;
+            } else {
+                bridge.add(0);
+            }
+
             seconds++;
 
             // 다리 끝에 있는 녀석을 꺼낸다.
@@ -280,7 +297,6 @@ class Solution2 {
             // 다리에 0 또는, 트럭(트럭의 무게)를 진입시킨다.
             // 진입할 때 무게를 증가시킨다.
 
-            if (allPassed) break;
         }
 
         return seconds;

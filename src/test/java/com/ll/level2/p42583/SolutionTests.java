@@ -45,4 +45,13 @@ public class SolutionTests {
                 8
         );
     }
+    @Test
+    @DisplayName("100, 100, {10} → 101")
+    void t05_1() {
+        assertThat(
+                new Solution2().solution(100, 100, new int[]{10})
+        ).isEqualTo(
+                101
+        );
+    }
 }
