@@ -291,12 +291,11 @@ class Solution2 {
 
             seconds++;
 
-            // 다리 끝에 있는 녀석을 꺼낸다.
-            // 꺼낼 때 무게를 감소시킨다.
 
-            // 다리에 0 또는, 트럭(트럭의 무게)를 진입시킨다.
-            // 진입할 때 무게를 증가시킨다.
-
+        }
+        while (onBridgeWeight > 0) {
+            seconds++;
+            onBridgeWeight -= bridge.poll();
         }
 
         return seconds;
