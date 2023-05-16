@@ -79,5 +79,29 @@ class PathCalculator {
         return nextNodes;
 
     }
+    public List<Integer> getNextNodes(int currentNode, List<Integer> history) {
+        return getNextNodes(currentNode, history, new ArrayList<>());
+    }
+
+    public List<Integer> getNextNodes(int currentNode, List<Integer> history, List<Integer> prevent) {
+        prevent.add(currentNode);
+        List<Integer> nextNodes = new ArrayList<>();
+
+        List<Integer> _nextNodes = getNextNodes(currentNode);
+
+        for (int nextNode : _nextNodes) {
+            if (prevent.contains(nextNode)) {
+                continue;
+            }
+
+            if (history.contains(nextNode)) {
+                nextNodes.addAll(getNextNodes(nextNode, history, prevent));
+            } else {
+                nextNodes.add(nextNode);
+            }
+        }
+
+        return nextNodes;
+    }
 
 }
