@@ -11,18 +11,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class SolutionTests {
-//    @Test
-//    @DisplayName("{0,0,1,1,1,0,1,0,1,0,1,1}, {{0,1},{1,2},{1,4},{0,8},{8,7},{9,10},{9,11},{4,3},{6,5},{4,6},{8,9}} → 5")
-//    void t01() {
-//        assertThat(
-//                new Solution().solution(
-//                        new int[]{0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1},
-//                        new int[][]{{0, 1}, {1, 2}, {1, 4}, {0, 8}, {8, 7}, {9, 10}, {9, 11}, {4, 3}, {6, 5}, {4, 6}, {8, 9}}
-//                )
-//        ).isEqualTo(
-//                5
-//        );
-//    }
+    @Test
+    @DisplayName("{0,0,1,1,1,0,1,0,1,0,1,1}, {{0,1},{1,2},{1,4},{0,8},{8,7},{9,10},{9,11},{4,3},{6,5},{4,6},{8,9}} → 5")
+    void t01() {
+        assertThat(
+                new Solution().solution(
+                        new int[]{0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1},
+                        new int[][]{{0, 1}, {1, 2}, {1, 4}, {0, 8}, {8, 7}, {9, 10}, {9, 11}, {4, 3}, {6, 5}, {4, 6}, {8, 9}}
+                )
+        ).isEqualTo(
+                5
+        );
+    }
+
+    @Test
+    @DisplayName("{0,1}, {{0,1}} → 1")
+    void t08() {
+        assertThat(
+                new Solution().solution(
+                        new int[]{0, 1},
+                        new int[][]{{0, 1}}
+                )
+        ).isEqualTo(
+                1
+        );
+    }
 
     @Test
     @DisplayName("getNextNodes")
@@ -87,8 +100,23 @@ public class SolutionTests {
                 );
     }
     @Test
-    @DisplayName("wholePath")
+    @DisplayName("getNextNodes with history")
     void t06() {
+        PathCalculator pathCalculator = new PathCalculator(
+                new int[]{0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0},
+                new int[][]{{0, 1}, {0, 2}, {1, 3}, {1, 4}, {2, 5}, {2, 6}, {3, 7}, {4, 8}, {6, 9}, {9, 10}}
+        );
+
+        assertThat(
+                pathCalculator.getNextNodes(4, List.of(0, 2, 5, 1, 4))
+        )
+                .containsAll(
+                        List.of(6, 3, 8)
+                );
+    }
+    @Test
+    @DisplayName("wholePath")
+    void t07() {
         PathCalculator pathCalculator = new PathCalculator(
                 new int[]{0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0},
                 new int[][]{{0, 1}, {0, 2}, {1, 3}, {1, 4}, {2, 5}, {2, 6}, {3, 7}, {4, 8}, {6, 9}, {9, 10}}
@@ -96,6 +124,8 @@ public class SolutionTests {
 
         Path path = pathCalculator.wholePath();
 
-        System.out.println(path);
+        Path maxSheepPath = pathCalculator.getMaxSheepPath();
+
+        System.out.println(maxSheepPath.getSheepCount());
     }
 }

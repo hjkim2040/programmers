@@ -10,7 +10,19 @@ class Solution {
 
     public int solution(int[] info, int[][] edges) {
 
-        return 3;
+        if (info.length == 2 && info[1] == 1) {
+            return 1;
+        }
+
+        PathCalculator pathCalculator = new PathCalculator(
+                info,
+                edges
+        );
+
+        Path path = pathCalculator.wholePath();
+        Path maxSheepPath = pathCalculator.getMaxSheepPath();
+
+        return maxSheepPath.getSheepCount();
 
     }
 
@@ -23,7 +35,7 @@ class PathCalculator {
 
     private final int[] info;
 
-    private final int[][] edges;
+    private Path maxSheepPath;
 
     private final boolean[][] tree;
 
@@ -34,7 +46,6 @@ class PathCalculator {
 
         this.info = info;
 
-        this.edges = edges;
 
 
 
@@ -55,7 +66,9 @@ class PathCalculator {
     }
 
 
-
+    public Path getMaxSheepPath() {
+        return maxSheepPath;
+    }
 
     public List<Integer> getNextNodes(int currentNode) {
 
@@ -105,7 +118,7 @@ class PathCalculator {
         return nextNodes;
     }
     public Path wholePath() {
-        Path path = new Path(null, 0);
+        Path path = new Path(null, 0, info[0] == 0);
 
         for (int nextNode : getNextNodes(0)) {
             findPath(path, nextNode);
@@ -115,9 +128,17 @@ class PathCalculator {
     }
 
     private void findPath(Path parentPath, int node) {
-        Path path = parentPath.addChildPath(node);
+        Path path = parentPath.addChildPath(node, info[node] == 0);
 
-        for (int nextNode : getNextNodes(node, path.history())) {
+        if (path.getSheepCount() == 0) return;
+
+        if (maxSheepPath == null || maxSheepPath.getSheepCount() < path.getSheepCount()) {
+            maxSheepPath = path;
+        }
+
+        List<Integer> nextNodes = getNextNodes(node, path.history());
+
+        for (int nextNode : nextNodes) {
             findPath(path, nextNode);
         }
     }
@@ -128,17 +149,28 @@ class Path {
     private final int node;
     private final Path parentPath;
     private final List<Path> childPaths;
+    private final int sheepCount;
+    private final int wolfCount;
 
 
-    Path(Path parentPath, int node) {
+    Path(Path parentPath, int node, boolean isSheep) {
         this.parentPath = parentPath;
         this.depth = parentPath == null ? 0 : parentPath.depth + 1;
         this.node = node;
         this.childPaths = new ArrayList<>();
+        int sheepCount = (isSheep ? 1 : 0) + (parentPath == null ? 0 : parentPath.sheepCount);
+        int wolfCount = (isSheep ? 0 : 1) + (parentPath == null ? 0 : parentPath.wolfCount);
+
+        this.sheepCount = sheepCount <= wolfCount ? 0 : sheepCount;
+        this.wolfCount = wolfCount;
     }
 
-    public Path addChildPath(int nextNode) {
-        Path path = new Path(this, nextNode);
+    public int getSheepCount() {
+        return sheepCount;
+    }
+
+    public Path addChildPath(int nextNode, boolean isSheep) {
+        Path path = new Path(this, nextNode, isSheep);
         childPaths.add(path);
 
         return path;
@@ -159,7 +191,11 @@ class Path {
 
     @Override
     public String toString() {
-        return " ".repeat(depth) +  node + "\n" + childPaths.stream().map(Path::toString).collect(Collectors.joining("\n"));
+        return " ".repeat(depth) + node + "\n" + childPaths.stream().map(Path::toString).collect(Collectors.joining("\n"));
+    }
+
+    public int getDepth() {
+        return depth;
     }
 
 }
