@@ -122,10 +122,8 @@ public class SolutionTests {
                 new int[][]{{0, 1}, {0, 2}, {1, 3}, {1, 4}, {2, 5}, {2, 6}, {3, 7}, {4, 8}, {6, 9}, {9, 10}}
         );
 
-        Path path = pathCalculator.wholePath();
+        Path path = pathCalculator.getFirstPath();
 
-        Path maxSheepPath = pathCalculator.getMaxSheepPath();
-
-        System.out.println(maxSheepPath.getSheepCount());
+        System.out.println(path);
     }
 }

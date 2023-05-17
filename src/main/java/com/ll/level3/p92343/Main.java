@@ -9,87 +9,40 @@ public class Main {
 class Solution {
 
     public int solution(int[] info, int[][] edges) {
-
-        if (info.length == 2 && info[1] == 1) {
-            return 1;
-        }
-
         PathCalculator pathCalculator = new PathCalculator(
                 info,
                 edges
         );
 
-        Path path = pathCalculator.wholePath();
-        Path maxSheepPath = pathCalculator.getMaxSheepPath();
-
-        return maxSheepPath.getSheepCount();
-
+        return pathCalculator.getMaxSheepCount();
     }
-
 }
-
-
-
 
 class PathCalculator {
 
     private final int[] info;
-
-    private Path maxSheepPath;
-
+    private Path maxSheepCountPath;
     private final boolean[][] tree;
-
-
-
+    private Path firstPath;
 
     public PathCalculator(int[] info, int[][] edges) {
-
         this.info = info;
-
-
-
-
-
         tree = new boolean[info.length][info.length];
-
-
-
-
         for (int[] edge : edges) {
-
             tree[edge[0]][edge[1]] = true;
-
             tree[edge[1]][edge[0]] = true;
-
         }
-
+        // 계산하기
+        calc();
     }
-
-
-    public Path getMaxSheepPath() {
-        return maxSheepPath;
-    }
-
     public List<Integer> getNextNodes(int currentNode) {
-
         List<Integer> nextNodes = new ArrayList<>();
 
-
-
-
         for (int i = 0; i < tree[currentNode].length; i++) {
-
             if (tree[currentNode][i]) {
-
                 nextNodes.add(i);
-
             }
-
         }
-
-
-
-
         return nextNodes;
 
     }
@@ -117,30 +70,38 @@ class PathCalculator {
 
         return nextNodes;
     }
-    public Path wholePath() {
+    private void calc() {
+        // 일단 첫번째 Path 를 만든다.
         Path path = new Path(null, 0, info[0] == 0);
 
+        firstPath = path;
+        maxSheepCountPath = path;
         for (int nextNode : getNextNodes(0)) {
-            findPath(path, nextNode);
+            addChildPath(path, nextNode);
         }
 
-        return path;
     }
 
-    private void findPath(Path parentPath, int node) {
+    private void addChildPath(Path parentPath, int node) {
         Path path = parentPath.addChildPath(node, info[node] == 0);
 
         if (path.getSheepCount() == 0) return;
 
-        if (maxSheepPath == null || maxSheepPath.getSheepCount() < path.getSheepCount()) {
-            maxSheepPath = path;
+        if (maxSheepCountPath.getSheepCount() < path.getSheepCount()) {
+            maxSheepCountPath = path;
         }
 
-        List<Integer> nextNodes = getNextNodes(node, path.history());
 
-        for (int nextNode : nextNodes) {
-            findPath(path, nextNode);
+        for (int nextNode : getNextNodes(node, path.getHistory())) {
+            addChildPath(path, nextNode);
         }
+    }
+    public Path getFirstPath() {
+        return firstPath;
+    }
+
+    public int getMaxSheepCount() {
+        return maxSheepCountPath.getSheepCount();
     }
 }
 
@@ -151,6 +112,7 @@ class Path {
     private final List<Path> childPaths;
     private final int sheepCount;
     private final int wolfCount;
+    private List<Integer> history;
 
 
     Path(Path parentPath, int node, boolean isSheep) {
@@ -161,7 +123,10 @@ class Path {
         int sheepCount = (isSheep ? 1 : 0) + (parentPath == null ? 0 : parentPath.sheepCount);
         int wolfCount = (isSheep ? 0 : 1) + (parentPath == null ? 0 : parentPath.wolfCount);
 
-        this.sheepCount = sheepCount <= wolfCount ? 0 : sheepCount;
+        if (sheepCount <= wolfCount) {
+            sheepCount = 0;
+        }
+        this.sheepCount = sheepCount;
         this.wolfCount = wolfCount;
     }
 
@@ -176,15 +141,12 @@ class Path {
         return path;
     }
 
-    public List<Integer> history() {
-        List<Integer> history = new ArrayList<>();
+    public List<Integer> getHistory() {
+        if (history != null) return history;
+        List<Integer> parentPathHistory = parentPath == null ? new ArrayList<>() : parentPath.getHistory();
 
-        Path path = this;
-
-        while (path != null) {
-            history.add(path.node);
-            path = path.parentPath;
-        }
+        history = new ArrayList<>(parentPathHistory);
+        history.add(node);
 
         return history;
     }
@@ -193,9 +155,4 @@ class Path {
     public String toString() {
         return " ".repeat(depth) + node + "\n" + childPaths.stream().map(Path::toString).collect(Collectors.joining("\n"));
     }
-
-    public int getDepth() {
-        return depth;
-    }
-
 }
